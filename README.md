@@ -5,4 +5,5 @@ The **completed** Unity projects for each example can be found in their own repo
 
 - https://github.com/dr-matt-smith/unity-cookbook-2018-ch14-01-2D-within-rectangle
 - https://github.com/dr-matt-smith/unity-cookbook-2018-ch14-02-3D-object-limit-movement
-- https://github.com/dr-matt-smith/unity-cookbook-2018-ch14-03-nearest-spawnpoint
+
+- https://github.com/dr-matt-smith/unity-cookbook-2018-ch14-04-nearest-spawnpoint
