@@ -29,6 +29,9 @@ public class PlayerMove : MonoBehaviour
 
 	// cached reference to a physics RigidBody
 	private Rigidbody2D rigidBody2D;
+	
+	// the new velocity based on inputs
+	private Vector2 newVelocity;
 
 	//--------------------------
 	// get reference tot the RigidBody 2D compoonent
@@ -42,22 +45,8 @@ public class PlayerMove : MonoBehaviour
         y_min = corner_min.position.y;
 	}
 
-    //--------------------------
-    /// <summary>
-    /// Keeps the object within minimum max rectangle.
-    /// </summary>
-    private void KeepWithinMinMaxRectangle()
-    {
-        float x = transform.position.x;
-        float y = transform.position.y;
-        float z = transform.position.z;
-        float clampedX = Mathf.Clamp(x, x_min, x_max);
-        float clampedY = Mathf.Clamp(y, y_min, y_max);
-        transform.position = new Vector3(clampedX, clampedY, z);
-    }
-
 	//---------------------------
-	void FixedUpdate()
+	void Update()
 	{
 		// read from movement keys
 		// arrow keys / WASD
@@ -70,13 +59,30 @@ public class PlayerMove : MonoBehaviour
 		float ySpeed = yMove * speed;
 
 		// create (dx,dy) vector object
-		Vector2 newVelocity = new Vector2(xSpeed, ySpeed);
-
+		newVelocity = new Vector2(xSpeed, ySpeed);
+	}
+	
+	void FixedUpdate()
+	{
 		// set the velocity of the Physicsl rigid body to this (x,y) vector
 		rigidBody2D.velocity = newVelocity;
 
         // restrict player movement
         KeepWithinMinMaxRectangle();
+	}
+	
+	//--------------------------
+	/// <summary>
+	/// Keeps the object within minimum max rectangle.
+	/// </summary>
+	private void KeepWithinMinMaxRectangle()
+	{
+		float x = transform.position.x;
+		float y = transform.position.y;
+		float z = transform.position.z;
+		float clampedX = Mathf.Clamp(x, x_min, x_max);
+		float clampedY = Mathf.Clamp(y, y_min, y_max);
+		transform.position = new Vector3(clampedX, clampedY, z);
 	}
 
     /// <summary>
