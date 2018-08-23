@@ -25,6 +25,11 @@ public class PlayerControl : MonoBehaviour
     private float z_min;
     private float z_max;
 
+    /*
+     * the new velocity for the object based on user inputs
+     */
+    private Vector3 newVelocity;
+
     /*----------------------------------------------------------
      * cache rigidbody component reference
      * read max/min values from corner GameObjects
@@ -39,16 +44,8 @@ public class PlayerControl : MonoBehaviour
     }
 
     /*----------------------------------------------------------*/
-    // each frame - move object, then clamp within range
-    void FixedUpdate()
-    {
-        KeyboardMovement();
-        KeepWithinMinMaxRectangle();
-    }
-
-    /*----------------------------------------------------------*/
-    // basic 3D character movement
-    private void KeyboardMovement()
+    // basic 3D character movement based on inputs
+    private void Update()
     {
         float xMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float zMove = Input.GetAxis("Vertical") * speed * Time.deltaTime;
@@ -56,11 +53,14 @@ public class PlayerControl : MonoBehaviour
         float xSpeed = xMove * speed;
         float zSpeed = zMove * speed;
 
-        Vector3 newVelocy = new Vector3(xSpeed, 0, zSpeed);
-
+        newVelocity = new Vector3(xSpeed, 0, zSpeed);
+    }
+    
+    /*----------------------------------------------------------*/
+    // each frame - move object, then clamp within range
+    void FixedUpdate()
+    {
         rigidBody.velocity = newVelocy;
-
-        // restrict player movement
         KeepWithinMinMaxRectangle();
     }
 
